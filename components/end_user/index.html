@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hiệu Sách Online</title>
+    <link rel="stylesheet" href="./style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+    <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet"> -->
+    <script
+      src="https://kit.fontawesome.com/264e375a82.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+
+  <body>
+    <div class="wrapper" id="wrapper">
+      <!--header-->
+      <header>
+        <div class="container__homepage header-container">
+          <div
+            id="logo__homepage"
+            class="logo__homepage"
+            onclick="returnHomepage()"
+          >
+            <img src="../../../assets/img/AMYTH.svg" alt="" />
+          </div>
+
+          <div class="logo-dropdown">
+            <div class="dropdown">
+              <button class="dropdown-btn">
+                <i class="fas fa-bars"></i>
+              </button>
+              <div class="dropdown-content">
+                <a href="#" onclick="filterProducts('Sách Văn Học Trong Nước')"
+                >Văn học trong nước</a
+              >
+              <a href="#" onclick="filterProducts('Sách Văn Học Nước Ngoài')"
+                >Văn Học nước ngoài</a
+              >
+              <a href="#" onclick="filterProducts('Sách Thiếu Nhi')"
+                >Sách thiếu nhi</a
+              >
+              <a href="#" onclick="filterProducts('Sách Phát Triển Bản Thân')"
+                >Sách phát triển bản thân</a
+              >
+              <a
+                href="#"
+                onclick="filterProducts('Sách Giáo Khoa - Giáo Trình')"
+                >Sách giáo khoa - giáo trình</a
+              >
+              <a href="#" onclick="filterProducts('Sách Ngoại Ngữ')"
+                >Sách học ngoại ngữ</a
+              >
+              <a href="#" onclick="filterProducts('Manga, Comic')"
+                >Manga Comic</a
+              >
+              </div>
+              <!-- <div class="dropdown-content">
+                <a href="#">Văn Học Trong Nước</a>
+                <a href="#">Văn Học Nước Ngoài</a>
+                <a href="#">Sách Kinh Tế</a>
+                <a href="#">Sách Thiếu Nhi</a>
+                <a href="#">Sách Phát Triển Bản Thân</a>
+                <a href="#">Sách Giáo Khoa - Giáo Trình</a>
+                <a href="#">Sách Học Ngoại Ngữ</a>
+                <a href="#">Manga, Comic</a>
+              </div> -->
+            </div>
+          </div>
+
+          <div class="search-bar">
+            <input type="text" id="tenSPTim" placeholder="Tìm kiếm..." />
+            <button class="search-btn" onclick="searchProduct()">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+
+          <div class="header-icons">
+            <button class="cart-btn">
+              <i class="fas fa-shopping-cart"></i>
+            </button>
+            <span style="font-size: 18px" id="loggedInName"></span>
+            <button id="login-btn" class="login-btn" onclick="showSigninForm()">
+              Đăng nhập
+            </button>
+            <button
+              id="signup-btn"
+              class="signup-btn"
+              onclick="showSignupForm()"
+            >
+              Đăng ký
+            </button>
+            <button id="logout-btn" class="logout-btn" onclick="logout()">
+              Đăng xuất
+            </button>
+          </div>
+        </div>
+      </header>
+      <!--Đăng kí/ Đăng nhập-->
+      <main class="">
+        <div class="model signin-signup">
+          <div class="container signup">
+            <form id="formdk">
+              <h2>Đăng Ký</h2>
+              <fieldset>
+                <legend>Họ & tên</legend>
+                <input
+                  class="txt"
+                  type="text"
+                  id="nameSignup"
+                  placeholder="VD: Xuân Mai"
+                />
+                <div style="color: red; display: none" id="nameErrorSignup">
+                  Tên không được để trống
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend>Email</legend>
+                <input
+                  class="txt"
+                  type="email"
+                  id="emailSignup"
+                  placeholder="VD: abc@gmail.com"
+                />
+                <div style="color: red; display: none" id="emailErrorSignup">
+                  email không được để trống
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend>Nhập mật khẩu</legend>
+                <input
+                  class="txt"
+                  type="password"
+                  id="passwordSignup"
+                  placeholder="*******"
+                />
+                <div style="color: red; display: none" id="passwordErrorSignup">
+                  password không được để trống
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend>Nhập lại mật khẩu</legend>
+                <input
+                  class="txt"
+                  type="password"
+                  id="password2Signup"
+                  placeholder="*******"
+                />
+                <div
+                  style="color: red; display: none"
+                  id="password2ErrorSignup"
+                ></div>
+              </fieldset>
+              <fieldset>
+                <legend>Địa chỉ</legend>
+                <textarea name="diachi" id="diachiSignup"></textarea>
+                <div style="color: red; display: none" id="diachiErrorSignup">
+                  địa chỉ không được để trống
+                </div>
+              </fieldset>
+              <!-- <div id="baoloi"></div> -->
+              <label>
+                <input type="checkbox" id="agree" /><span
+                  >Đồng ý với các điều khoản và chính sách bảo mật</span
+                ><br />
+              </label>
+              <!-- <button type="submit" onclick="return checkDk()" id="dangky">Đăng Ký</button><span>Đã có tài khoản? <a href="#">Đăng nhập</a></span> -->
+              <button type="submit" id="dangky">Đăng Ký</button>
+              <p>Đã có tài khoản? <a href="javascript:;">Đăng nhập</a></p>
+            </form>
+          </div>
+
+          <div class="container signin">
+            <form id="formdn">
+              <h2>Đăng Nhập</h2>
+              <fieldset>
+                <legend>Email</legend>
+                <input
+                  class="txt"
+                  type="email"
+                  id="emailSignin"
+                  placeholder="VD: abc@gmail.com"
+                />
+                <div style="color: red; display: none" id="emailErrorSignin">
+                  email không được để trống
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend>Nhập mật khẩu</legend>
+                <input
+                  class="txt"
+                  type="password"
+                  id="passwordSignin"
+                  placeholder="*******"
+                />
+                <div style="color: red; display: none" id="passwordErrorSignin">
+                  password không được để trống
+                </div>
+              </fieldset>
+              <div id="baoloiSignin"></div>
+              <button type="submit" id="dangnhap">Đăng Nhập</button>
+              <p>Chưa có tài khoản? <a href="javascript:;">Đăng Ký</a></p>
+              <!-- <button type="submit" onclick="return checkDn()" id="dangnhap">Đăng Nhập</button><span>Chưa có tài khoản? <a href="#">Đăng Ký</a></span> -->
+            </form>
+          </div>
+        </div>
+      </main>
+
+      <!--Homepage-->
+      <div class="homepage">
+        <!--Banner-->
+        <section class="banner">
+          <img src="../../assets/img/banner/SlideBanner_840x320.webp" alt="banner" />
+        </section>
+
+        <!-- Best Seller Section -->
+        <section class="product-section">
+          <div class="container__homepage">
+            <h2>Best Seller</h2>
+            <div class="product-grid product-grid-bestseller">
+              <!-- hiển thị 4 sản phẩm  -->
+            </div>
+            <button class="view-more" onclick="filterBestSellerProducts()">Xem Thêm</button>
+          </div>
+        </section>
+
+        <!-- Manga - comic -->
+        <section class="product-section">
+          <div class="container__homepage">
+            <h2>Manga - Comic</h2>
+            <div class="product-grid product-grid-manga">
+              <!-- hiển thị 4 sản phẩm  -->
+            </div>
+            <button class="view-more" onclick="filterProducts('Manga, Comic')">Xem thêm</button>
+          </div>
+        </section>
+      </div>
+
+      <!--Xuân Mai - tìm kiếm-->
+      <div class="search-container">
+        <div class="search-content">
+          <div class="search-filter">
+            <!-- <h2>LỌC THEO</h2> -->
+            <!-- <hr />
+            <span class="price-range">Khoảng giá</span>
+            <br />
+            <input type="text" class="input-price-range" id="khoangGiaTimBD"/> -
+            <input type="text" class="input-price-range" id="khoangGiaTimKT"/>
+            <hr />
+            <button id="PriceSearchBtn" onclick="searchProductByPrice()">Tìm</button>
+            <hr /> -->
+            <div class="book_category">
+              <span class="category-search">Danh mục</span>
+              <a href="#" onclick="filterProducts('Sách Văn Học Trong Nước')"
+                >Văn học trong nước</a
+              >
+              <a href="#" onclick="filterProducts('Sách Văn Học Nước Ngoài')"
+                >Văn Học nước ngoài</a
+              >
+              <a href="#" onclick="filterProducts('Sách Thiếu Nhi')"
+                >Sách thiếu nhi</a
+              >
+              <a href="#" onclick="filterProducts('Sách Phát Triển Bản Thân')"
+                >Sách phát triển bản thân</a
+              >
+              <a
+                href="#"
+                onclick="filterProducts('Sách Giáo Khoa - Giáo Trình')"
+                >Sách giáo khoa - giáo trình</a
+              >
+              <a href="#" onclick="filterProducts('Sách Ngoại Ngữ')"
+                >Sách học ngoại ngữ</a
+              >
+              <a href="#" onclick="filterProducts('Manga, Comic')"
+                >Manga Comic</a
+              >
+            </div>
+          </div>
+          <div class="search-goal">
+            <div class="search-title">
+              <div class="search-title left">
+                <span>Kết quả tìm kiếm : </span>
+                <span id="search-result-category">(0 kết quả)</span>            
+              </div>
+              <div class="search-title right">
+                <span class="sort">Sắp xếp theo</span>
+                <select id="sortSelect">
+                  <option value="1">Giá cao đến thấp</option>
+                  <option value="2">Giá thấp đến cao</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="search-goal list">
+              <div class="product-grid product-grid-search">
+                <div class="product-item">
+                  <img
+                    src="../../assets/img/book/mangacomic/frieren_phap_su_tien_tang_ban_thuong_bia_tap_12.webp"
+                  />
+                  <p>Frieren - Pháp sư tiễn táng</p>
+                  <span class="price">119.000 đ</span>
+                </div>
+                <div class="product-item">
+                  <img
+                    src="../../assets/img/book/kinhte/nenkinhtetudo.webp"
+                    alt="Product 3"
+                  />
+                  <p>Nền kinh tế tự do</p>
+                  <span class="price">119.000 đ</span>
+                </div>
+                <div class="product-item">
+                  <img
+                    src="../../assets/img/book/mangacomic/spyxfamily_bia_tap_10.webp"
+                    alt="Product 3"
+                  />
+                  <p>Spy x Family</p>
+                  <span class="price">119.000 đ</span>
+                </div>
+                <div class="product-item">
+                  <img
+                    src="../../assets/img/book/mangacomic/haikyutap41.webp"
+                    alt="Product 4"
+                  />
+                  <p>Haikyuu</p>
+                  <span class="price">119.000 đ</span>
+                </div>
+                <div class="product-item">
+                  <img
+                    src="../../assets/img/book/mangacomic/frieren_phap_su_tien_tang_ban_thuong_bia_tap_12.webp"
+                  />
+                  <p>Frieren - Pháp sư tiễn táng</p>
+                  <span class="price">119.000 đ</span>
+                </div>
+                <div class="product-item">
+                  <img
+                    src="../../assets/img/book/kinhte/nenkinhtetudo.webp"
+                    alt="Product 3"
+                  />
+                  <p>Nền kinh tế tự do</p>
+                  <span class="price">119.000 đ</span>
+                </div>
+                <div class="product-item">
+                  <img
+                    src="../../assets/img/book/mangacomic/spyxfamily_bia_tap_10.webp"
+                    alt="Product 3"
+                  />
+                  <p>Spy x Family</p>
+                  <span class="price">119.000 đ</span>
+                </div>
+                <div class="product-item">
+                  <img
+                    src="../../assets/img/book/mangacomic/haikyutap41.webp"
+                    alt="Product 4"
+                  />
+                  <p>Haikyuu</p>
+                  <span class="price">119.000 đ</span>
+                </div>
+                <div class="product-item">
+                  <img
+                    src="../../assets/img/book/mangacomic/haikyutap41.webp"
+                    alt="Product 4"
+                  />
+                  <p>Haikyuu</p>
+                  <span class="price">119.000 đ</span>
+                </div>
+              </div>
+              <!-- Pagination -->
+              <div class="pagination" id="paginationProduct">
+                <a href="#">&laquo;</a>
+                <a href="#" class="active">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#">4</a>
+                <a href="#">&raquo;</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- cart -->
+      <!-- <div class="container-cart">
+        <div class="cart-items">
+          <h1>Giỏ hàng</h1>
+          <div class="empty-cart-message">Giỏ hàng trống</div>
+
+          <div class="chi-tiet">
+            <p>Tên sản phẩm</p>
+            <p>Số lượng</p>
+            <p>Thành tiền</p>
+          </div>
+
+          
+          <div class="cart-item" data-id="1">
+            <div>
+              <div class="cart-checkbox">
+                <input
+                  type="checkbox"
+                  value="None"
+                  class="cart-item-checkbox"
+                />
+              </div>
+              <div class="cart-item-image">
+                <img
+                  class="cart-img-product"
+                  src="../../assets/img/book/kinhte/bezonomics-kinhtehocbezos.webp"
+                />
+              </div>
+              <div class="info-product-cart">
+                <p>Bezonomics Kinh Tế Học Bezos</p>
+                <div class="price-original">
+                  <span class="price">159.100 đ</span>
+                </div>
+              </div>
+            </div>
+            <div class="cart-item-quantity">
+              <button class="minus-btn">
+                <i class="fa-solid fa-minus"></i>
+              </button>
+              <input type="text" class="amount" name="amount" value="1" />
+              <button class="plus-btn"><i class="fa-solid fa-plus"></i></button>
+            </div>
+            <div>
+              <div class="cart-item-price">
+                <p class="item-price">159.000đ</p>
+              </div>
+              <div class="delete">
+                <i class="fa-solid fa-trash"></i>
+              </div>
+            </div>
+          </div>
+
+        
+          <div class="cart-item" data-id="2">
+            <div>
+              <div class="cart-checkbox">
+                <input
+                  type="checkbox"
+                  value="None"
+                  class="cart-item-checkbox"
+                />
+              </div>
+              <div class="cart-item-image">
+                <img
+                  class="cart-img-product"
+                  src="../../assets/img/book/kinhte/bezonomics-kinhtehocbezos.webp"
+                />
+              </div>
+              <div class="info-product-cart">
+                <p>Bezonomics Kinh Tế Học Bezos</p>
+                <div class="price-original">
+                  <span class="price">159.100 đ</span>
+                </div>
+              </div>
+            </div>
+            <div class="cart-item-quantity">
+              <button class="minus-btn">
+                <i class="fa-solid fa-minus"></i>
+              </button>
+              <input type="text" class="amount" name="amount" value="1" />
+              <button class="plus-btn"><i class="fa-solid fa-plus"></i></button>
+            </div>
+            <div>
+              <div class="cart-item-price">
+                <p class="item-price">159.000đ</p>
+              </div>
+              <div class="delete">
+                <i class="fa-solid fa-trash"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cart">
+          <h1>Thông Tin Đơn Hàng</h1>
+          <div class="total">
+            <span>Số sản phẩm:</span><span class="total-quantity">0</span>
+          </div>
+          <div class="cost">
+            <span>Tổng tiền: </span><span class="total-price">0 đ</span>
+          </div>
+          <button class="pay">Thanh toán</button>
+        </div>
+      </div> -->
+
+      <div class="container-cart hidden" id="cart-container">
+        <div class="cart-items">
+          <h1>Giỏ hàng</h1>
+          <div class="empty-cart-message">Giỏ hàng trống</div>
+          <div class="chi-tiet">
+            <p>Tên sản phẩm</p>
+            <p>Số lượng</p>
+            <p>Thành tiền</p>
+          </div>
+          <!-- Cart items will be dynamically inserted here -->
+        </div>
+        <div class="cart">
+          <h1>Thông Tin Đơn Hàng</h1>
+          <div class="total">
+            <span>Số sản phẩm:</span><span class="total-quantity">0</span>
+          </div>
+          <div class="cost">
+            <span>Tổng tiền: </span><span class="total-price">0 đ</span>
+          </div>
+          <button class="pay" onclick="paymentMethod()">Thanh toán</button>
+        </div>
+      </div>
+
+      <!-- ----container__cart-payment----- -->
+      <div class="container__cart-payment">
+        <div class="cart-info">
+          <div class="section shipping-address">
+            <h1>Địa Chỉ Giao Hàng</h1>
+            <div class="shipping-address-details">
+              <div class="address-info">
+                <p>Nguyễn Vân Anh (0102030405)</p>
+                <p>123 Đường ABC, Phường XYZ, Quận 1, TP.HCM</p>
+              </div>
+              <button id="change-address">Thay đổi</button>
+            </div>
+          </div>
+
+          <div class="section payment-method">
+            <h1>Phương Thức Thanh Toán</h1>
+            <div class="payment-radio">
+              <input type="radio" name="payment" value="cod" />Thanh toán khi
+              nhận hàng
+            </div>
+            <div class="payment-radio">
+              <input type="radio" name="payment" value="credit" />Thanh toán
+              bằng chuyển khoản
+            </div>
+          </div>
+
+          <div class="section order-details">
+            <h1>Kiểm Tra Lại Đơn Hàng</h1>
+            <div class="cart-product">
+              <div class="product-img-name">
+                <img
+                  class="cart-img-product"
+                  src="../../assets/img/book/kinhte/bezonomics-kinhtehocbezos.webp"
+                />
+                <h4>Bezonomics Kinh Tế Học Bezos</h4>
+              </div>
+              <p>x1</p>
+              <p>200.000 đ</p>
+            </div>
+            <div class="cart-product">
+              <div class="product-img-name">
+                <img
+                  class="cart-img-product"
+                  src="../../assets/img/book/kinhte/bezonomics-kinhtehocbezos.webp"
+                />
+                <h4>Bezonomics Kinh Tế Học Bezos</h4>
+              </div>
+              <p>x1</p>
+              <p>200.000 đ</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="cart-shipping-and-total">
+          <h1>Thông Tin Đơn Hàng</h1>
+          <div class="total-amount">
+            <span>Thành tiền: </span><span></span>
+          </div>
+          <div class="shipping-fee">
+            <span>Phí ship: </span><span></span>
+          </div>
+          <div class="total-cost">
+            <span>Tổng tiền: </span><span></span>
+          </div>
+          <button class="btn btn-checkout" id="btn-checkout" onclick="handleCheckout()">Thanh Toán</button>
+        </div>
+      </div>
+      <!-- order successfully-->
+      <div class="order-successfully-popup">
+        <div class="overlay" id="order-successfully-overlay">
+          <div class="order-successfully-content">
+            <div class="circle-container">
+              <div class="circle light">
+                <div class="circle medium">
+                  <div class="circle dark">
+                    <i class="fa-solid fa-basket-shopping"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <h1>Đơn Hàng Của Bạn Đã Hoàn Tất</h1>
+            <button class="btn" id="view-order-btn">Kiểm Tra Đơn Hàng</button>
+            <button class="btn-white" id="return-homepage-btn">
+              Quay Về Trang Chủ
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- shipping address modal -->
+      <div class="shipping-address-popup">
+        <div class="overlay" id="shipping-address-overlay">
+          <div class="shipping-address-content" id="shipping-address-content">
+            <h1>Địa Chỉ Của Tôi</h1>
+            <div id="address-list"><ul></ul></div>
+            <div class="shipping-address-btns">
+              <button class="btn" id="add-address">Thêm địa chỉ</button>
+              <button class="btn" id="confirm-address">Xác nhận</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- add address modal -->
+      <div class="add-address-popup">
+        <div class="overlay" id="add-address-overlay">
+          <div class="add-address-content" id="add-address-content">
+            <h1>Thêm Địa Chỉ</h1>
+            <form name="add-address">
+              <div class="input-address-info">
+                <label for="addUserName">Tên người nhận</label>
+                <input
+                  type="text"
+                  id="addUserName"
+                  name="addUserName"
+                  required
+                />
+              </div>
+              <div class="input-address-info">
+                <label for="addPhoneNumber">Số điện thoại</label>
+                <input
+                  type="tel"
+                  id="addPhoneNumber"
+                  name="addPhoneNumber"
+                  required
+                />
+              </div>
+              <div class="input-address-info">
+                <label for="addShippingAddress">Địa chỉ nhận hàng</label>
+                <input
+                  id="addShippingAddress"
+                  name="addShippingAddress"
+                  required
+                />
+              </div>
+              <div class="setDefault">
+                <label for="default-address">Đặt làm địa chỉ mặc định</label>
+                <input
+                  type="checkbox"
+                  id="add-default-address"
+                  name="addShippingAddress"
+                />
+              </div>
+              <div class="add-address-btns">
+                <button type="submit" class="btn" id="confirm-add-address">
+                  Xác nhận
+                </button>
+                <button type="button" class="btn" id="cancel-add-address">
+                  Hủy bỏ
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- edit address modal -->
+      <div class="edit-address-popup">
+        <!-- Modal chỉnh sửa địa chỉ -->
+        <div class="overlay" id="edit-address-overlay">
+          <div class="edit-address-content" id="edit-address-content">
+            <h1>Chỉnh sửa địa chỉ</h1>
+            <form id="edit-address-form">
+              <div class="edit-address">
+                <label for="userName">Tên người nhận</label>
+                <input type="text" id="editUserName" name="userName" required />
+              </div>
+              <div class="edit-address">
+                <label for="phoneNumber">Số điện thoại</label>
+                <input
+                  type="tel"
+                  id="editPhoneNumber"
+                  name="phoneNumber"
+                  required
+                />
+              </div>
+              <div class="edit-address">
+                <label for="shippingAddress">Địa chỉ nhận hàng</label>
+                <input
+                  id="editShippingAddress"
+                  name="shippingAddress"
+                  required
+                />
+              </div>
+              <div class="setDefault">
+                <label for="default-address">Đặt làm địa chỉ mặc định</label>
+                <input
+                  type="checkbox"
+                  id="edit-default-address"
+                  name="addShippingAddress"
+                />
+              </div>
+              <div class="edit-address-btns">
+                <button type="submit" class="btn" id="save-edit-address">
+                  Lưu
+                </button>
+                <button type="button" class="btn" id="cancel-edit-address">
+                  Hủy
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+
+      <!-- Container to display product details -->
+      <div class="container-item-detail">
+        <nav class="breadcrumb">
+          <a href="#" onclick="returnHomepage()">Trang Chủ</a>
+          <span>></span>
+          <a id="theLoaiSP" href="#">Best Seller</a>
+        </nav>
+        <div class="product-card">
+          <div class="product-img">
+            <img
+              id="product-image"
+              src="https://via.placeholder.com/360x528"
+              alt="Book Cover"
+              class="book-cover"
+            />
+          </div>
+          <div class="product-info">
+            <h1 id="product-title" class="product-title"></h1>
+            <div class="product-details">
+              <p>Tác giả: <span id="product-author"></span></p>
+              <p>Nhà xuất bản: <span id="product-publisher"></span></p>
+            </div>
+            <div class="product-price"></div>
+            <div class="quantity-container">
+              <label for="quantity">Số lượng:</label>
+              <div class="quantity-input">
+                <button id="decrease-btn" class="quantity-btn">-</button>
+                <span style="font-size: 18px" id="quantity"></span>
+                <button id="increase-btn" class="quantity-btn">+</button>
+              </div>
+            </div>
+            <div class="product-actions">
+              <button class="add-to-cart">Thêm vào giỏ hàng</button>
+              <!-- <button class="buy-now">Mua ngay</button> -->
+            </div>
+          </div>
+        </div>
+        <div class="product-description">
+          <h2>Thông tin chi tiết</h2>
+          <p class="underlined-product-description">
+            <strong>Tác giả:</strong> <span id="detail-author"></span>
+          </p>
+          <p class="underlined-product-description">
+            <strong>NXB:</strong> <span id="detail-publisher"></span>
+          </p>
+          <p class="underlined-product-description">
+            <strong>Năm xuất bản:</strong> <span id="detail-year"></span>
+          </p>
+          <h2>Mô tả sản phẩm</h2>
+          <p id="product-description"></p>
+        </div>
+      </div>
+
+      <!-- container category -->
+
+      <!-- <div class="container-category">
+        <nav class="breadcrumb">
+          <a href="#">Trang Chủ</a>
+          <span>></span>
+          <a href="#">Best Seller</a>
+        </nav>
+        <section class="product-section">
+          <div class="container__homepage">
+            <h2>Best Seller</h2>
+            <div class="product-grid">
+              <div class="product-item">
+                <img
+                  src="../../assets/img/book/mangacomic/frieren_phap_su_tien_tang_ban_thuong_bia_tap_12.webp"
+                  alt="Product 1"
+                />
+                <p>Frieren - Pháp sư tiễn táng</p>
+                <span class="price">119.000 đ</span>
+              </div>
+              <div class="product-item">
+                <img
+                  src="../../assets/img/book/kinhte/nenkinhtetudo.webp"
+                  alt="Product 2"
+                />
+                <p>Nền kinh tế tự do</p>
+                <span class="price">119.000 đ</span>
+              </div>
+              <div class="product-item">
+                <img
+                  src="../../assets/img/book/mangacomic/spyxfamily_bia_tap_10.webp"
+                  alt="Product 3"
+                />
+                <p>Spy x Family</p>
+                <span class="price">119.000 đ</span>
+              </div>
+              <div class="product-item">
+                <img
+                  src="../../assets/img/book/mangacomic/haikyutap41.webp"
+                  alt="Product 4"
+                />
+                <p>Haikyuu</p>
+                <span class="price">119.000 đ</span>
+              </div>
+              <div class="product-item">
+                <img
+                  src="../../assets//img/book/mangacomic/historietap11.webp"
+                  alt="Product 5"
+                />
+                <p>Historie - Tập 11</p>
+                <span class="price">119.000 đ</span>
+              </div>
+              <div class="product-item">
+                <img
+                  src="../../assets/img/book/phattrienbanthan/danhbainoilo.webp"
+                  alt="Product 6"
+                />
+                <p>Đánh bại nỗi lo</p>
+                <span class="price">119.000 đ</span>
+              </div>
+              <div class="product-item">
+                <img
+                  src="../../assets/img/book/sachthieunhi/ngoinhangantamguong.webp"
+                  alt="Product 7"
+                />
+                <p>Ngôi nhà gần tấm gương</p>
+                <span class="price">119.000 đ</span>
+              </div>
+              <div class="product-item">
+                <img
+                  src="../../assets/img/book/kinhte/bezonomics-kinhtehocbezos.webp"
+                  alt="Product 8"
+                />
+                <p>Bezonomics - Kinh tế học bezos</p>
+                <p>
+                  <span class="price">119.000 đ</span>
+                </p>
+              </div>
+
+              <div class="product-item">
+                <img
+                  src="../../assets/img/book/kinhte/kinhtehaucovid.webp"
+                  alt="Product 9"
+                />
+                <p>Kinh tế hậu Covid</p>
+                <span class="price">119.000 đ</span>
+              </div>
+              <div class="product-item">
+                <img
+                  src="../../assets/img/book/mangacomic/windbreakertap1.webp"
+                  alt="Product 10"
+                />
+                <p>Wind Breaker - Tập 1</p>
+                <span class="price">119.000 đ</span>
+              </div>
+              <div class="product-item">
+                <img
+                  src="../../assets/img/book/ngoaingu/120bailuantienganh.webp"
+                  alt="Product 11"
+                />
+                <p>120 Bài luận Tiếng Anh</p>
+                <span class="price">119.000 đ</span>
+              </div>
+              <div class="product-item">
+                <img
+                  src="../../assets/img/book/vanhocnuocngoai/bongtoigiuachungta.webp"
+                  alt="Product 12"
+                />
+                <p>Bóng tối giữa chúng ta</p>
+                <span class="price">119.000 đ</span>
+              </div>
+            </div>
+            <div class="pagination">
+              <a href="#">&laquo;</a>
+              <a href="#" class="active">1</a>
+              <a href="#">2</a>
+              <a href="#">3</a>
+              <a href="#">4</a>
+              <a href="#">&raquo;</a>
+            </div>
+          </div>
+        </section>
+      </div> -->
+      <!-- footer -->
+      <footer>
+        <div class="footer-logo">
+          <img src="../../assets/img/AMYTH.svg" />
+        </div>
+
+        <div class="footer__column">
+          <h3 class="footer__heading">Dịch vụ</h3>
+          <ul class="footer-list">
+            <li class="footer-item">
+              <a href="" class="footer-item-link">Điều khoản sử dụng</a>
+            </li>
+            <li class="footer-item">
+              <a href="" class="footer-item-link">Giới thiệu về chúng tôi</a>
+            </li>
+            <li class="footer-item">
+              <a href="" class="footer-item-link"
+                >Hệ thống trung tâm nhà sách</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="footer__column">
+          <h3 class="footer__heading">Thông tin liên hệ</h3>
+          <ul class="footer-list">
+            <li class="footer-item">
+              <i class="fa-solid fa-phone"></i>1234567890
+            </li>
+            <li class="footer-item">
+              <i class="fa-solid fa-envelope"></i>amyth123@gmail.com
+            </li>
+            <li class="footer-item">
+              <i class="fa-solid fa-location-dot"></i>273 Đ. An Dương Vương,
+              Phường 3, Quận 5, Hồ Chí Minh
+            </li>
+          </ul>
+        </div>
+      </footer>
+
+      <script src="../../components/end_user/index.js"></script>
+    </div>
+  </body>
+</html>

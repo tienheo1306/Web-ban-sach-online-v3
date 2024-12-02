@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hiệu Sách Online</title>
+    <link rel="stylesheet" href="./taikhoan.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Toastify/1.11.2/Toastify.min.css">
+    <script
+      src="https://kit.fontawesome.com/264e375a82.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Toastify/1.11.2/Toastify.min.js"></script>
+  </head>
+  <body>
+    <!--header-->
+    <header>
+      <div class="container__homepage header-container">
+        <div class="logo__homepage">
+          <img src="../../../assets/img/AMYTH.svg" alt="" />
+        </div>
+
+        <div class="logo-dropdown">
+          <div class="dropdown">
+            <button class="dropdown-btn">
+              <i class="fas fa-bars"></i>
+            </button>
+            <div class="dropdown-content">
+              <a href="#">Văn Học Trong Nước</a>
+              <a href="#">Văn Học Nước Ngoài</a>
+              <a href="#">Sách Kinh Tế</a>
+              <a href="#">Sách Thiếu Nhi</a>
+              <a href="#">Sách Phát Triển Bản Thân</a>
+              <a href="#">Sách Giáo Khoa - Giáo Trình</a>
+              <a href="#">Sách Học Ngoại Ngữ</a>
+              <a href="#">Manga, Comic</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="search-bar">
+          <input type="text" placeholder="Tìm kiếm..." />
+          <button class="search-btn">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+
+        <div class="header-icons">
+          <button class="cart-btn">
+            <i class="fas fa-shopping-cart"></i>
+          </button>
+          <button class="login-btn">Đăng nhập</button>
+          <button class="signup-btn">Đăng ký</button>
+        </div>
+      </div>
+    </header>
+    <!-- end header -->
+    <!-- Body chính -->
+    <div class="account-container">
+      <h1>Tài Khoản</h1>
+      <br />
+      <div class="account-content">
+        <!-- Div bên trái -->
+        <div class="menu-container">
+          <ul class="menu">
+            <li><button class="btn">Thông tin cá nhân</button></li>
+            <li><button class="btn">Số địa chỉ</button></li>
+            <li><button class="btn">Đơn hàng</button></li>
+          </ul>
+        </div>
+
+        <!-- Div bên phải -->
+        <div class="form-container">
+          <div class="main-account-body-col">
+              <label for="infoname">Họ và tên</label>
+              <input type="text" id="infoname" name="infoname" placeholder="Nhập họ và tên..." />
+              <label for="infoemail">Email</label>
+              <input type="email" id="infoemail" name="infoemail" placeholder="Nhập email..."/>
+              <label for="infophone">Số điện thoại</label>
+              <input type="tel" id="infophone" name="infophone" placeholder="Nhập số điện thoại..."/>
+              <div class="save-button-container">
+                  <button id="save-info-user" onclick="changeInformation()" class="save-button">Lưu thay đổi</button>
+                  </div>
+                  <div id="message"></div>
+          </div>
+      
+          <div class="main-account-body-col">
+              <label for="current-password">Mật khẩu hiện tại</label>
+              <input
+              type="password"
+              id="current-password"
+              name="current-password"
+              placeholder="Nhập mật khẩu hiện tại..."
+              />
+              <label for="new-password">Mật khẩu mới</label>
+              <input
+              type="password"
+              id="new-password"
+              name="new-password"
+              placeholder="Nhập mật khẩu mới..."
+              />
+              <label for="confirm-password">Nhập lại mật khẩu</label>
+              <input
+              type="password"
+              id="confirm-password"
+              name="confirm-password"
+              placeholder="Nhập lại mật khẩu mới..."
+              />
+              <div class="save-button-container">
+              <button id="save-password" onclick="changePassword()" class="save-button">Đổi mật khẩu</button>
+              </div>
+          </div>
+        </div>
+
+        <!-- div sổ địa chỉ -->
+        <div class="sodiachi">
+          <div class="sodiachi-info" id="address-container-1">
+              <div class="sizechu">
+                  <h3>Vân Anh</h3>
+                  <p>273, Đ.An Dương Vương, Phường 3, Quận 5, Hồ Chí Minh</p>
+                  <p>1234567890</p>
+              </div>
+              <div>
+                <button class="btn"><i class="fas fa-edit"></i> Edit </button>
+                  <br>      
+                  <button class="btn-delete" onclick="removeAddress('address-container-1')"><i class="fas fa-trash"></i> Delete</button>
+              </div>
+          </div>
+
+          <div class="sodiachi-info" id="address-container-2">
+              <div class="sizechu">
+                  <h3>Vân Anh</h3>
+                  <p>4, Đ.Tôn Đức Thắng, Bến Nghé, Quận 1, Hồ Chí Minh</p>
+                  <p>1234567890</p>
+              </div>
+              <div>
+                <button class="btn"><i class="fas fa-edit"></i> Edit </button>
+                  <br>      
+                  <button class="btn-delete" onclick="removeAddress('address-container-1')"><i class="fas fa-trash"></i> Delete</button>
+              </div>
+          </div>
+
+          <div class="sodiachi-info" id="address-container-3">
+              <div class="sizechu">
+                  <h3>Hoàng Anh</h3>
+                  <p>273, Đ.An Dương Vương, Phường 3, Quận 5, Hồ Chí Minh</p>
+                  <p>0234567890</p>
+              </div>
+              <div>
+                  <button class="btn"><i class="fas fa-edit"></i> Edit </button>
+                  <br>      
+                  <button class="btn" onclick="removeAddress('address-container-3')"><i class="fas fa-trash"></i> Delete</button>
+              </div>
+          </div>
+
+      
+          <div class="sodiachi-info" id="address-container-4">
+              <div class="sizechu">
+                  <h3>Minh Anh</h3>
+                  <p>273, Đ.An Dương Vương, Phường 3, Quận 5, Hồ Chí Minh</p>
+                  <p>0234567890</p>
+              </div>
+              <div>
+                <button class="btn" id="edit-address"><i class="fas fa-edit"></i> Edit </button>
+                  <br>      
+                  <button class="btn-delete" onclick="removeAddress('address-container-4')"><i class="fas fa-trash"></i> Delete</button>
+              </div>
+          </div>
+
+          <div class="save-button-container">   
+              <button id="addAD" class="save-button">Thêm địa chỉ</button>
+          </div>
+      </div>
+
+      <!-- end div sổ địa chỉ -->
+
+         <!-- Nền tối khi hiển thị form -->
+         <!-- div thêm địa chỉ -->
+         <div class="themdiachi">
+             <div class="form-container">  
+                 <h2>Thêm địa chỉ</h2>  
+                 <br>  
+                 <div class="form-group">
+                     <label for="ten">Tên người nhận</label>
+                     <input type="text" id="ten" name="ten" placeholder="Nhập tên...">
+                 </div>
+                 <div class="form-group">
+                 <label for="tel">Số điện thoại</label>
+                 <input type="text" id="phone" name="phone" placeholder="Nhập số điện thoại...">
+                 </div>
+                 <div>
+                     <label for="diachi">Địa chỉ nhận hàng</label>
+                     <input type="text" id="diachi" name="daichi" placeholder="Nhập địa chỉ nhận hàng...">
+                 </div>
+                 <div>
+                     <label for="change-pass"><input type="checkbox" id="dcmacdinh" name="dcmacdinh">Đặt làm địa chỉ mặt định</label>
+                 </div>             
+                 <div class = "themdiachi-container">
+                     <button id ="luuAD" class="themdiachi-button">Xác nhận</button>
+                     <button id ="huyboAD" class="themdiachi-button">Hủy bỏ</button>
+                 </div>       
+             </div>
+         </div>
+         <div class="overlay"></div> 
+         <!-- end div them dia chi-->
+
+                  <!-- Nền tối khi hiển thị form -->
+          <div class="overlay" id="edit-address-overlay"></div>
+
+          <!-- Form chỉnh sửa địa chỉ -->
+          <div class="edit-address-popup">
+              <div class="edit-address-content">
+                  <h1>Chỉnh sửa địa chỉ</h1>
+                  <form id="edit-address-form">
+                      <div class="edit-address">
+                          <label for="editUserName">Tên người nhận</label>
+                          <input type="text" id="editUserName" name="userName" required />
+                      </div>
+                      <div class="edit-address">
+                          <label for="editPhoneNumber">Số điện thoại</label>
+                          <input type="tel" id="editPhoneNumber" name="phoneNumber" required />
+                      </div>
+                      <div class="edit-address">
+                          <label for="editShippingAddress">Địa chỉ nhận hàng</label>
+                          <input id="editShippingAddress" name="shippingAddress" required />
+                      </div>
+                      <div class="edit-address-btns">
+                          <button type="button" class="btn" id="save-edit-address">Lưu</button>
+                          <button type="button" class="btn" id="cancel-edit-address">Hủy</button>
+                      </div>
+                  </form>
+              </div>
+          </div>
+
+        <!-- div đơn hàng -->
+        <div class="donhang">
+          <div class="donhang-info" id="item-container-1">
+            <div class="cart-product">
+              <div class="product-img-name">
+                <img
+                  class="cart-img-product"
+                  src="../../../assets/img/book/kinhte/bezonomics-kinhtehocbezos.webp"
+                />
+                <h4>Bezonomics Kinh Tế Học Bezos</h4>
+              </div>
+              <p>x1</p>
+              <p>200.000 đ</p>
+            </div>
+            <div class="btn-donhang-group">
+              <button class="btn-dh btn-donhang-chitiet">Xem chi tiết</button>
+              <br />
+              <button class="btn-dh btn-donhang-huy" onclick="removeItem('item-container-1')">Hủy đơn hàng</button>
+            </div>
+          </div>
+          <div class="donhang-info" id="item-container-2">
+            <div class="cart-product">
+              <div class="product-img-name">
+                <img
+                  class="cart-img-product"
+                  src="../../../assets/img/book/kinhte/bezonomics-kinhtehocbezos.webp"
+                />
+                <h4>Bezonomics Kinh Tế Học Bezos</h4>
+              </div>
+              <p>x1</p>
+              <p>200.000 đ</p>
+            </div>
+            <div class="btn-donhang-group">
+              <button class="btn-dh btn-donhang-chitiet">Xem chi tiết</button>
+              <br />
+              <button class="btn-dh btn-donhang-huy" onclick="removeItem('item-container-2')">Hủy đơn hàng</button>
+            </div>
+          </div>
+          <div class="donhang-info" id="item-container-3">
+            <div class="cart-product">
+              <div class="product-img-name">
+                <img
+                  class="cart-img-product"
+                  src="../../../assets/img/book/kinhte/bezonomics-kinhtehocbezos.webp"
+                />
+                <h4>Bezonomics Kinh Tế Học Bezos</h4>
+              </div>
+              <p>x1</p>
+              <p>200.000 đ</p>
+            </div>
+            <div class="btn-donhang-group">
+              <button class="btn-dh btn-donhang-chitiet">Xem chi tiết</button>
+              <br />
+              <button class="btn-dh btn-donhang-huy" onclick="removeItem('item-container-3')">Hủy đơn hàng</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- footer -->
+    <footer>
+      <div class="footer-logo">
+        <img src="../../../assets/img/AMYTH.svg" />
+      </div>
+
+      <div class="footer__column">
+        <h3 class="footer__heading">Dịch vụ</h3>
+        <ul class="footer-list">
+          <li class="footer-item">
+            <a href="" class="footer-item-link">Điều khoản sử dụng</a>
+          </li>
+          <li class="footer-item">
+            <a href="" class="footer-item-link">Giới thiệu về chúng tôi</a>
+          </li>
+          <li class="footer-item">
+            <a href="" class="footer-item-link">Hệ thống trung tâm nhà sách</a>
+          </li>
+        </ul>
+      </div>
+      <div class="footer__column">
+        <h3 class="footer__heading">Thông tin liên hệ</h3>
+        <ul class="footer-list">
+          <li class="footer-item">
+            <i class="fa-solid fa-phone"></i>1234567890
+          </li>
+          <li class="footer-item">
+            <i class="fa-solid fa-envelope"></i>amyth123@gmail.com
+          </li>
+          <li class="footer-item">
+            <i class="fa-solid fa-location-dot"></i>273 Đ. An Dương Vương,
+            Phường 3, Quận 5, Hồ Chí Minh
+          </li>
+        </ul>
+      </div>
+    </footer>
+    <!-- end footer -->
+    <script src="taikhoan.js"></script>
+  </body>
+</html>
