@@ -1645,9 +1645,159 @@ overlay.addEventListener("click", () => {
 // Load nhân viên và js cho nhân viên ( tiến )
 // Hiển thị danh sách nhân viên
 // Cập nhật hàm renderEmployees để sử dụng phân trang
+
+// function renderEmployees(filteredEmployees = []) {
+//   const employeeList = document.querySelector(".client-list tbody");
+//   const employees = filteredEmployees.length    ? filteredEmployees    : JSON.parse(localStorage.getItem("employees")) || [];
+//   const rowsPerPage = 5; // Số lượng nhân viên mỗi trang
+//   const pageCount = Math.ceil(employees.length / rowsPerPage);
+
+//   let currentPage = 1;
+
+//   // Hiển thị bảng nhân viên cho trang hiện tại
+//   function displayTable(page) {
+//     const start = (page - 1) * rowsPerPage;
+//     const end = start + rowsPerPage;
+//     const paginatedData = employees.slice(start, end);
+
+//     employeeList.innerHTML = paginatedData
+//       .map(
+//         (employee) => `
+//         <tr>
+//           <td>${employee.id}</td>
+//           <td>${employee.name}</td>
+//           <td>${employee.phone}</td>
+//           <td>${employee.position}</td>
+//           <td>
+//             <span class="status ${
+//               employee.status === "Hoạt động" ? "active" : "bian"
+//             }">
+//               ${employee.status}
+//             </span>
+//           </td>
+//           <td class="btn-action-group">
+//             <button class="btn-status btn-info" onclick="showDetailNV('${
+//               employee.id
+//             }')">
+//               <i class="fa-solid fa-info"></i>
+//             </button>
+//             <button class="btn-status btn-primary" onclick="showSuaFormNV('${
+//               employee.id
+//             }')">
+//               <i class="fas fa-edit"></i>
+//             </button>
+//             <button class="btn-status btn-danger" onclick="deleteEmployee('${
+//               employee.id
+//             }')">
+//               <i class="fas fa-trash-alt"></i>
+//             </button>
+//           </td>
+//         </tr>`
+//       )
+//       .join("");
+//   }
+
+//   // Hiển thị phân trang
+//   function displayPagination(page) {
+//     const pagination = document.getElementById("paginationEmployee");
+//     pagination.innerHTML = "";
+
+//     const prevButton = document.createElement("button");
+//     prevButton.innerText = "❮";
+//     prevButton.classList.add("pagination-btn");
+//     prevButton.disabled = page === 1;
+//     prevButton.addEventListener("click", () => {
+//       if (page > 1) {
+//         currentPage--;
+//         displayTable(currentPage);
+//         displayPagination(currentPage);
+//       }
+//     });
+//     pagination.appendChild(prevButton);
+
+//     const pageButtons = [];
+//     const startPage = Math.max(1, page - 2); // Xác định trang bắt đầu
+//     const endPage = Math.min(pageCount, page + 2); // Xác định trang kết thúc
+//     // Hiển thị trang đầu tiên nếu không có dấu "..."
+//     if (startPage > 1) {
+//       const firstPageButton = document.createElement("button");
+//       firstPageButton.innerText = 1;
+//       firstPageButton.classList.add("pagination-btn");
+//       firstPageButton.addEventListener("click", () => {
+//         currentPage = 1;
+//         displayTable(currentPage);
+//         displayPagination(currentPage);
+//       });
+//       pagination.appendChild(firstPageButton);
+//     }
+//     // Nếu số trang giữa trang đầu tiên và trang hiện tại quá lớn, hiển thị dấu "..."
+//     if (startPage > 2) {
+//       const dotsButton = document.createElement("button");
+//       dotsButton.innerText = "...";
+//       dotsButton.classList.add("pagination-btn");
+//       dotsButton.disabled = true; // Dấu "..." không phải là nút nhấn
+//       pagination.appendChild(dotsButton);
+//     }
+
+//     for (let i = startPage; i <= endPage; i++) {
+//       const button = document.createElement("button");
+//       button.innerText = i;
+//       button.classList.add("pagination-btn");
+//       if (i === currentPage) button.classList.add("active");
+//       button.addEventListener("click", () => {
+//         currentPage = i;
+//         displayTable(currentPage);
+//         displayPagination(currentPage);
+//       });
+//       pagination.appendChild(button);
+//     }
+
+//     if (endPage < pageCount - 1) {
+//       const dotsButton = document.createElement("button");
+//       dotsButton.innerText = "...";
+//       dotsButton.classList.add("pagination-btn");
+//       dotsButton.disabled = true; // Dấu "..." không phải là một nút có thể nhấn
+//       pagination.appendChild(dotsButton);
+//     }
+
+//     // Hiển thị trang cuối cùng
+//     if (endPage < pageCount) {
+//       const lastPageButton = document.createElement("button");
+//       lastPageButton.innerText = pageCount;
+//       lastPageButton.classList.add("pagination-btn");
+//       lastPageButton.addEventListener("click", () => {
+//         currentPage = pageCount;
+//         displayTable(currentPage);
+//         displayPagination(currentPage);
+//       });
+//       pagination.appendChild(lastPageButton);
+//     }
+
+//     const nextButton = document.createElement("button");
+//     nextButton.innerText = "❯";
+//     nextButton.classList.add("pagination-btn");
+//     nextButton.disabled = currentPage === pageCount;
+//     nextButton.addEventListener("click", () => {
+//       if (currentPage < pageCount) {
+//         currentPage++;
+//         displayTable(currentPage);
+//         displayPagination(currentPage);
+//       }
+//     });
+//     pagination.appendChild(nextButton);
+//   }
+//   // Hiển thị bảng và phân trang lần đầu
+//   displayTable(currentPage);
+//   displayPagination(currentPage);
+// }
+
 function renderEmployees(filteredEmployees = []) {
   const employeeList = document.querySelector(".client-list tbody");
-  const employees = filteredEmployees.length    ? filteredEmployees    : JSON.parse(localStorage.getItem("employees")) || [];
+  let employees = filteredEmployees.length ? filteredEmployees : JSON.parse(localStorage.getItem("employees")) || [];
+
+  // Lọc nhân viên có trạng thái "Hoạt động"
+  employees = employees.filter(employee => employee.status === "Hoạt động");
+
   const rowsPerPage = 5; // Số lượng nhân viên mỗi trang
   const pageCount = Math.ceil(employees.length / rowsPerPage);
 
@@ -1668,26 +1818,18 @@ function renderEmployees(filteredEmployees = []) {
           <td>${employee.phone}</td>
           <td>${employee.position}</td>
           <td>
-            <span class="status ${
-              employee.status === "Hoạt động" ? "active" : "bian"
-            }">
+            <span class="status ${employee.status === "Hoạt động" ? "active" : "bian"}">
               ${employee.status}
             </span>
           </td>
           <td class="btn-action-group">
-            <button class="btn-status btn-info" onclick="showDetailNV('${
-              employee.id
-            }')">
+            <button class="btn-status btn-info" onclick="showDetailNV('${employee.id}')">
               <i class="fa-solid fa-info"></i>
             </button>
-            <button class="btn-status btn-primary" onclick="showSuaFormNV('${
-              employee.id
-            }')">
+            <button class="btn-status btn-primary" onclick="showSuaFormNV('${employee.id}')">
               <i class="fas fa-edit"></i>
             </button>
-            <button class="btn-status btn-danger" onclick="deleteEmployee('${
-              employee.id
-            }')">
+            <button class="btn-status btn-danger" onclick="deleteEmployee('${employee.id}')">
               <i class="fas fa-trash-alt"></i>
             </button>
           </td>
@@ -1785,10 +1927,14 @@ function renderEmployees(filteredEmployees = []) {
     });
     pagination.appendChild(nextButton);
   }
+
   // Hiển thị bảng và phân trang lần đầu
   displayTable(currentPage);
   displayPagination(currentPage);
 }
+
+
+
 
 // Lắng nghe sự kiện DOMContentLoaded để khởi tạo
 document.addEventListener("DOMContentLoaded", function () {
@@ -1983,7 +2129,7 @@ function loadDefaultEmployees() {
         name: "Võ Xuân Mai",
         phone: "0100203045",
         position: "Quản lý",
-        status: "Bị ẩn",
+        status: "Hoạt động",
       },
       {
         id: "02",
@@ -2004,7 +2150,7 @@ function loadDefaultEmployees() {
         name: "Trần Quỳnh Hương",
         phone: "0100203045",
         position: "Quản lý",
-        status: "Bị ẩn",
+        status: "Hoạt động",
       },
       {
         id: "05",
