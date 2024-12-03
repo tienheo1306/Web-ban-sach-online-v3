@@ -2208,21 +2208,129 @@ overlay.addEventListener("click", () => {
   overlay.classList.add("hidden");
   detailPopup.classList.add("hidden");
 });
-// Tùy chọn tháng
+
+// Dữ liệu thống kê 
+const statisticsData = [
+  { id: 1, date: "2023-01-15", ordersCount: 4, booksSold: 12, price: 45000 },
+  { id: 2, date: "2023-03-22", ordersCount: 2, booksSold: 8, price: 70000 },
+  { id: 3, date: "2023-06-10", ordersCount: 4, booksSold: 15, price: 50000 },
+  { id: 4, date: "2023-09-05", ordersCount: 3, booksSold: 20, price: 40000 },
+  { id: 5, date: "2024-01-01", ordersCount: 16, booksSold: 10, price: 354000 },
+  { id: 6, date: "2024-01-05", ordersCount: 1, booksSold: 5, price: 70000 },
+  { id: 7, date: "2024-01-10", ordersCount: 12, booksSold: 7, price: 404000 },
+  { id: 8, date: "2024-02-01", ordersCount: 4, booksSold: 12, price: 55000 },
+  { id: 9, date: "2024-02-15", ordersCount: 6, booksSold: 8, price: 80000 },
+  { id: 10, date: "2022-03-25", ordersCount: 7, booksSold: 18, price: 10000 },
+  { id: 11, date: "2020-05-15", ordersCount: 3, booksSold: 10, price: 90000 },
+  { id: 12, date: "2022-07-10", ordersCount: 1, booksSold: 5, price: 30000 },
+  { id: 13, date: "2023-08-20", ordersCount: 4, booksSold: 13, price: 60000 },
+  { id: 14, date: "2021-01-18", ordersCount: 5, booksSold: 7, price: 155000 },
+  { id: 15, date: "2020-04-05", ordersCount: 6, booksSold: 9, price: 265000 },
+  { id: 16, date: "2022-07-22", ordersCount: 9, booksSold: 11, price: 120000 },
+  { id: 17, date: "2023-01-30", ordersCount: 2, booksSold: 6, price: 45000 },
+  { id: 18, date: "2024-06-15", ordersCount: 5, booksSold: 14, price: 50000 },
+  { id: 19, date: "2022-03-10", ordersCount: 2, booksSold: 9, price: 70000 },
+  { id: 20, date: "2024-10-25", ordersCount: 1, booksSold: 12, price: 60000 },
+];
+
+// Lưu trữ vào localStorage
+localStorage.setItem("statisticsData", JSON.stringify(statisticsData));
+
+// Hàm hiển thị dữ liệu lên bảng
+function renderStatistics(filteredData) {
+  const tbody = document.querySelector(".client-list1.stats-list table tbody");
+  tbody.innerHTML = ""; // Xóa các dòng cũ
+
+  // Tính tổng số liệu
+  const totalOrders = filteredData.reduce((sum, item) => sum + item.ordersCount, 0); // Số lượng đơn hàng
+  const totalBooks = filteredData.reduce((sum, item) => sum + item.booksSold, 0); // Tổng số sách
+  const totalRevenue = filteredData.reduce((sum, item) => sum + item.booksSold * item.price, 0); // Tổng doanh thu
+
+  // Hiển thị từng hóa đơn
+  filteredData.forEach(item => {
+    const row = document.createElement("tr");
+    row.innerHTML = 
+      `<td>${item.id}</td>
+      <td>${item.date}</td>
+      <td>${item.ordersCount}</td>
+      <td>${item.booksSold}</td>
+      <td>${(item.booksSold * item.price).toLocaleString()} đ</td>`;
+    tbody.appendChild(row);
+  });
+
+  // Tạo hàng tổng kết
+  const row = document.createElement("tr");
+  row.innerHTML = 
+    `<td colspan="2">Tổng cộng</td>
+    <td>${totalOrders}</td>
+    <td>${totalBooks}</td>
+    <td>${totalRevenue.toLocaleString()} đ</td>`;
+  tbody.appendChild(row);
+}
+
+// Sự kiện hiển thị thống kê khi bấm nút
+// Sự kiện hiển thị thống kê khi bấm nút
+document.getElementById("xemthongke").addEventListener("click", function () {
+  const filterType = document.getElementById("filter-type").value;
+  const selectedTime = document.getElementById("time-select").value;
+
+  const storedData = JSON.parse(localStorage.getItem("statisticsData"));
+
+  let filteredData = [];
+
+  if (filterType === "month") {
+    const [selectedMonth, selectedYear] = selectedTime.split('-').map(Number);
+    filteredData = storedData.filter(item => {
+      const itemDate = new Date(item.date);
+      return itemDate.getMonth() + 1 === selectedMonth && itemDate.getFullYear() === selectedYear;
+    });
+  } else if (filterType === "years") {
+    const selectedYear = parseInt(selectedTime);
+    filteredData = storedData.filter(item => {
+      return new Date(item.date).getFullYear() === selectedYear;
+    });
+  }
+
+  renderStatistics(filteredData);
+});
+
+// Sự kiện thay đổi loại lọc (tháng/năm)
+
 const filter = document.getElementById("filter-type");
 filter.addEventListener("change", function () {
   const timeType = document.getElementById("time-select");
+  const selectedYear = timeType.value || new Date().getFullYear(); // Giữ lại năm đã chọn hoặc năm mặc định
+
   timeType.innerHTML = ""; // Xóa các tùy chọn cũ
-  const filterText = document.getElementById("filter-type").value;
-  console.log(filterText);
+  const filterText = filter.value;
+  
   if (filterText === "month") {
-    // Hiển thị các tháng trong năm 2024
+    // Tạo các tháng cho năm đã chọn
     for (let i = 1; i <= 12; i++) {
-      timeType.innerHTML += `<option value="${i}-2024">${i}/2024</option>`;
+      timeType.innerHTML += `<option value="${i}-${selectedYear}">${i}/${selectedYear}</option>`;
     }
+    
+    // Cập nhật giá trị mặc định của time-select sau khi tạo các tháng
+    timeType.value = timeType.options[0].value; // Chọn tháng đầu tiên của năm đã chọn
   } else if (filterText === "years") {
-    // Hiển thị các năm
-    timeType.innerHTML += `<option value="2024">2024</option>`;
-    timeType.innerHTML += `<option value="2025">2025</option>`;
+    const currentYear = new Date().getFullYear();
+    for (let i = 0; i < 10; i++) {
+      const year = currentYear - i;
+      timeType.innerHTML += `<option value="${year}">${year}</option>`;
+    }
+    
+    // Cập nhật giá trị mặc định của time-select sau khi tạo các năm
+    timeType.value = currentYear; // Chọn năm hiện tại
   }
+});
+
+
+// Khi trang vừa tải, mặc định hiển thị dữ liệu năm 2024
+document.addEventListener("DOMContentLoaded", function () {
+  const filterType = document.getElementById("filter-type");
+  const timeSelect = document.getElementById("time-select");
+
+  filterType.value = "years";
+  // Đảm bảo năm mặc định là năm hiện tại khi trang tải
+  timeSelect.value = new Date().getFullYear(); // Lựa chọn năm hiện tại
 });
