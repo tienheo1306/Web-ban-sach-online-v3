@@ -2480,3 +2480,364 @@ document.addEventListener("DOMContentLoaded", function () {
   // Đảm bảo năm mặc định là năm hiện tại khi trang tải
   timeSelect.value = new Date().getFullYear(); // Lựa chọn năm hiện tại
 });
+
+// THỐNG KÊ SÁCH
+// Dữ liệu đơn hàng
+const orders = [
+  {
+    id: "1",
+    cart: [
+      {
+        product: {
+          idBook: 3,
+          status: "Hoạt động",
+          name: "Củng cố ôn luyện hóa học",
+          img: "/assets/img/book/giaokhoagiaotrinh/cungcoonluyenhoahoc.webp",
+          category: "Sách Giáo Khoa - Giáo Trình",
+          price: 10000,
+          publisher: "NXB Giáo Dục Việt Nam",
+          publishedYear: 2020,
+          author: "Trần Thanh Hải",
+          isBestSeller: true,
+          desc: "",
+        },
+        quantity: 1,
+      },
+    ],
+    total: 40000,
+    paymentMethod: "cod",
+    idUser: 1,
+    address: "123 Nguyễn Huệ, Quận 1, TP. HCM",
+    date: "12/2/2024, 8:41:58 AM",
+  },
+  {
+    id: "2",
+    cart: [
+      {
+        product: {
+          idBook: 3,
+          status: "Hoạt động",
+          name: "Củng cố ôn luyện hóa học",
+          img: "/assets/img/book/giaokhoagiaotrinh/cungcoonluyenhoahoc.webp",
+          category: "Sách Giáo Khoa - Giáo Trình",
+          price: 10000,
+          publisher: "NXB Giáo Dục Việt Nam",
+          publishedYear: 2020,
+          author: "Trần Thanh Hải",
+          isBestSeller: true,
+          desc: "",
+        },
+        quantity: 1,
+      },
+    ],
+    total: 40000,
+    paymentMethod: "credit",
+    idUser: 1,
+    address: "123 Nguyễn Huệ, Quận 1, TP. HCM",
+    date: "12/2/2024, 9:13:12 AM",
+  },
+  {
+    id: "3",
+    cart: [
+      {
+        product: {
+          idBook: 4,
+          status: "Hoạt động",
+          name: "Giáo dục công dân 9",
+          img: "/assets/img/book/giaokhoagiaotrinh/giaoduccongdan9.webp",
+          category: "Sách Giáo Khoa - Giáo Trình",
+          price: 20000,
+          publisher: "NXB Giáo Dục",
+          publishedYear: 2018,
+          author: "Lê Văn Hùng",
+          isBestSeller: true,
+          desc: "",
+        },
+        quantity: 1,
+      },
+    ],
+    total: 50000,
+    paymentMethod: "credit",
+    idUser: 1,
+    address: "123 Nguyễn Huệ, Quận 1, TP. HCM",
+    date: "12/2/2024, 9:14:52 AM",
+  },
+  {
+    id: "4",
+    cart: [
+      {
+        product: {
+          idBook: 2,
+          status: "Bị ẩn",
+          name: "Bộ đề kiểm tra đánh giá năng lực học sinh lớp 1",
+          img: "/assets/img/book/giaokhoagiaotrinh/bodekiemtradanhgianangluchsl1.webp",
+          category: "Sách Giáo Khoa - Giáo Trình",
+          price: 100000,
+          publisher: "NXB Giáo Dục Việt Nam",
+          publishedYear: 2019,
+          author: "Nguyễn Thị Minh Thu (chủ biên)",
+          isBestSeller: true,
+          desc: "",
+        },
+        quantity: 22,
+      },
+    ],
+    total: 230000,
+    paymentMethod: "credit",
+    idUser: 1,
+    address: "123 Nguyễn Huệ, Quận 1, TP. HCM",
+    date: "12/2/2024, 9:16:32 AM",
+  },
+  {
+    id: "5",
+    cart: [
+      {
+        product: {
+          idBook: 1,
+          status: "Bị ẩn",
+          name: "Bài tập toán 1",
+          img: "/assets/img/book/giaokhoagiaotrinh/baitaptoan1.webp",
+          category: "Sách Giáo Khoa - Giáo Trình",
+          price: 200000,
+          publisher: "NXB Giáo Dục Việt Nam",
+          author: "GS. TS. Lê Anh Vinh (chủ biên)",
+          publishedYear: 2019,
+          isBestSeller: true,
+          desc: "Sách tiểu học",
+        },
+        quantity: 1,
+      },
+    ],
+    total: 230000,
+    paymentMethod: "credit",
+    idUser: 1,
+    address: "123 Nguyễn Huệ, Quận 1, TP. HCM",
+    date: "12/2/2024, 9:22:34 AM",
+  },
+  {
+    id: "6",
+    cart: [
+      {
+        product: {
+          idBook: 1,
+          status: "Bị ẩn",
+          name: "Bài tập toán 1",
+          img: "/assets/img/book/giaokhoagiaotrinh/baitaptoan1.webp",
+          category: "Sách Giáo Khoa - Giáo Trình",
+          price: 200000,
+          publisher: "NXB Giáo Dục Việt Nam",
+          author: "GS. TS. Lê Anh Vinh (chủ biên)",
+          publishedYear: 2019,
+          isBestSeller: true,
+          desc: "Sách tiểu học",
+        },
+        quantity: 1,
+      },
+    ],
+    total: 230000,
+    paymentMethod: "credit",
+    idUser: 1,
+    address: "123 Nguyễn Huệ, Quận 1, TP. HCM",
+    date: "12/2/2024, 9:22:34 AM",
+  },
+  {
+    id: "7",
+    cart: [
+      {
+        product: {
+          idBook: 1,
+          status: "Bị ẩn",
+          name: "Bài tập toán 1",
+          img: "/assets/img/book/giaokhoagiaotrinh/baitaptoan1.webp",
+          category: "Sách Giáo Khoa - Giáo Trình",
+          price: 200000,
+          publisher: "NXB Giáo Dục Việt Nam",
+          author: "GS. TS. Lê Anh Vinh (chủ biên)",
+          publishedYear: 2019,
+          isBestSeller: true,
+          desc: "Sách tiểu học",
+        },
+        quantity: 1,
+      },
+    ],
+    total: 230000,
+    paymentMethod: "credit",
+    idUser: 1,
+    address: "123 Nguyễn Huệ, Quận 1, TP. HCM",
+    date: "12/2/2024, 9:22:34 AM",
+  },
+  {
+    id: "8",
+    cart: [
+      {
+        product: {
+          idBook: 1,
+          status: "Bị ẩn",
+          name: "Bài tập toán 1",
+          img: "/assets/img/book/giaokhoagiaotrinh/baitaptoan1.webp",
+          category: "Sách Giáo Khoa - Giáo Trình",
+          price: 200000,
+          publisher: "NXB Giáo Dục Việt Nam",
+          author: "GS. TS. Lê Anh Vinh (chủ biên)",
+          publishedYear: 2019,
+          isBestSeller: true,
+          desc: "Sách tiểu học",
+        },
+        quantity: 1,
+      },
+    ],
+    total: 230000,
+    paymentMethod: "credit",
+    idUser: 1,
+    address: "123 Nguyễn Huệ, Quận 1, TP. HCM",
+    date: "12/2/2024, 9:22:34 AM",
+  },
+  {
+    id: "9",
+    cart: [
+      {
+        product: {
+          idBook: 4,
+          status: "Bị ẩn",
+          name: "	Giáo dục công dân 9",
+          img: "/assets/img/book/giaokhoagiaotrinh/baitaptoan1.webp",
+          category: "Sách Giáo Khoa - Giáo Trình",
+          price: 200000,
+          publisher: "NXB Giáo Dục Việt Nam",
+          author: "GS. TS. Lê Anh Vinh (chủ biên)",
+          publishedYear: 2019,
+          isBestSeller: true,
+          desc: "Sách tiểu học",
+        },
+        quantity: 1,
+      },
+    ],
+    total: 230000,
+    paymentMethod: "credit",
+    idUser: 1,
+    address: "123 Nguyễn Huệ, Quận 1, TP. HCM",
+    date: "12/2/2024, 9:22:34 AM",
+  },
+  {
+    id: "10",
+    cart: [
+      {
+        product: {
+          idBook: 4,
+          status: "Bị ẩn",
+          name: "	Giáo dục công dân 9",
+          img: "/assets/img/book/giaokhoagiaotrinh/baitaptoan1.webp",
+          category: "Sách Giáo Khoa - Giáo Trình",
+          price: 200000,
+          publisher: "NXB Giáo Dục Việt Nam",
+          author: "GS. TS. Lê Anh Vinh (chủ biên)",
+          publishedYear: 2019,
+          isBestSeller: true,
+          desc: "Sách tiểu học",
+        },
+        quantity: 1,
+      },
+    ],
+    total: 230000,
+    paymentMethod: "credit",
+    idUser: 1,
+    address: "123 Nguyễn Huệ, Quận 1, TP. HCM",
+    date: "12/2/2024, 9:22:34 AM",
+  },
+];
+
+// Lưu dữ liệu vào localStorage nếu chưa có
+if (!localStorage.getItem("orders")) {
+  localStorage.setItem("orders", JSON.stringify(orders));
+}
+
+// Lấy dữ liệu từ localStorage
+const storedOrders = JSON.parse(localStorage.getItem("orders")) || [];
+
+/**
+ * Hàm tìm sách bán chạy nhất
+ * @param {Array} orders - Danh sách đơn hàng
+ * @returns {Array} - Danh sách sách đã bán và số lượng
+ */
+// Hàm tìm sách bán chạy nhất, chỉ lấy 3 cuốn sách bán chạy nhất
+function getBooksSalesData(orders) {
+  const bookSales = {};
+
+  // Tổng hợp số lượng sách từ các đơn hàng
+  orders.forEach((order) => {
+    order.cart.forEach((item) => {
+      const bookId = item.product.idBook;
+      if (!bookSales[bookId]) {
+        bookSales[bookId] = { ...item.product, quantity: 0 };
+      }
+      bookSales[bookId].quantity += item.quantity;
+    });
+  });
+
+  // Chuyển đổi thành mảng và sắp xếp theo số lượng bán (quantity) giảm dần
+  const booksArray = Object.values(bookSales);
+  booksArray.sort((a, b) => b.quantity - a.quantity); // Sắp xếp theo số lượng bán
+
+  // Lấy 3 cuốn sách có số lượng bán nhiều nhất
+  return booksArray.slice(0, 3); // Cắt ra 3 cuốn sách đầu tiên
+}
+
+/**
+ * Hàm cập nhật nội dung bảng thống kê sách
+ * @param {Array} booksData - Dữ liệu sách
+ */
+function updateBooksSalesTable(booksData) {
+  const tbody = document.querySelector(".stats-list2 tbody");
+  tbody.innerHTML = ""; // Xóa nội dung cũ
+
+  booksData.forEach((book) => {
+    const revenue = book.quantity * book.price;
+    const row = `
+      <tr>
+        <td>${book.idBook}</td>
+        <td>${book.name}</td>
+        <td>${book.author}</td>
+        <td>${book.publisher}</td>
+        <td>${book.quantity}</td>
+        <td>${revenue.toLocaleString()} VND </td>
+      </tr>
+    `;
+    tbody.innerHTML += row;
+  });
+}
+
+/**
+ * Hàm hiển thị hoặc ẩn bảng thống kê sách
+ * @param {boolean} show - True để hiển thị, false để ẩn
+ */
+function toggleBooksSalesTable(show) {
+  const tableContainer = document.querySelector(".client-list2");
+  tableContainer.style.display = show ? "block" : "none";
+}
+
+/**
+ * Hàm hiển thị hoặc ẩn bảng thống kê đơn hàng
+ * @param {boolean} show - True để hiển thị, false để ẩn
+ */
+function toggleOrdersTable(show) {
+  const ordersTableContainer = document.querySelector(".client-list1");
+  ordersTableContainer.style.display = show ? "block" : "none";
+}
+
+// Sự kiện khi nhấn nút "Xem thống kê sách"
+document.querySelector("#xemthongkesach").addEventListener("click", () => {
+  const booksData = getBooksSalesData(storedOrders);
+  updateBooksSalesTable(booksData);
+  toggleBooksSalesTable(true); // Hiển thị bảng thống kê sách
+  toggleOrdersTable(false); // Ẩn bảng đơn hàng
+});
+
+// Sự kiện khi nhấn nút "Xem thống kê" (nếu cần quay lại bảng đơn hàng)
+document.querySelector("#xemthongke").addEventListener("click", () => {
+  toggleBooksSalesTable(false); // Ẩn bảng sách
+  toggleOrdersTable(true); // Hiển thị bảng đơn hàng
+});
+
+// Ẩn bảng thống kê sách khi mới tải trang
+toggleBooksSalesTable(false);
+toggleOrdersTable(true);  // Hiển thị bảng đơn hàng ban đầu
